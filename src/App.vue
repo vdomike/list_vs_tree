@@ -1,19 +1,71 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <list-component
+      :items="items"
+      @onDelete="toggleSelected"
+    />
+    <tree-component
+      :items="items"
+      @onChange="toggleSelected"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ListComponent from "../src/components/ListComponent";
+import TreeComponent from "../src/components/TreeComponent";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: "App",
+  components: { ListComponent, TreeComponent },
+  data() {
+    return {
+      items: {
+        name: "root",
+        selected: false,
+        children: [
+          {
+            name: "item1",
+            selected: true,
+            children: [
+              {
+                name: "item11",
+                selected: true,
+                children: []
+              },
+              {
+                name: "item12",
+                selected: false,
+                children: []
+              }
+            ]
+          },
+          {
+            name: "item2",
+            selected: false,
+            children: [
+              {
+                name: "item21",
+                selected: true,
+                children: []
+              },
+              {
+                name: "item22",
+                selected: false,
+                children: []
+              }
+            ]
+          }
+        ]
+      }
+    };
+  },
+  methods: {
+    toggleSelected(item) {
+      item.selected = !item.selected;
+    }
   }
-}
+};
 </script>
 
 <style>
@@ -24,5 +76,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  display: flex;
 }
 </style>
